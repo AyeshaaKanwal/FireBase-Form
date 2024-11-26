@@ -81,8 +81,8 @@ document.addEventListener("DOMContentLoaded", () => {
       // An error happened.
     }); 
   }
-  let signoutbtn = document.getElementById("signoutbtn");
-  signoutbtn.addEventListener('click', signout);
+    let signoutbtn = document.getElementById("signoutbtn");
+    signoutbtn.addEventListener('click', signout);
   
     // email verification functions
     let verifiedbtn = document.getElementById("verification-email");
@@ -94,38 +94,42 @@ document.addEventListener("DOMContentLoaded", () => {
           console.log('sent')
         });
       });
+
+
+
+       //  Rememberr me functions
+    document.addEventListener("DOMContentLoaded", () => {
+      // Reference to the checkbox and input fields
+      const rememberMeCheckbox = document.getElementById("rememberMe");
+      const emailInput = document.getElementById("email");
+      const passwordInput = document.getElementById("password");
+    
+      // Check if user credentials are saved in localStorage
+      if (localStorage.getItem("rememberMe") === "true") {
+        emailInput.value = localStorage.getItem("email");
+        passwordInput.value = localStorage.getItem("password");
+        rememberMeCheckbox.checked = true;
+      }
+    
+      // Event listener for the checkbox
+      rememberMeCheckbox.addEventListener("change", () => {
+        if (rememberMeCheckbox.checked) {
+          // Save credentials in localStorage
+          localStorage.setItem("rememberMe", "true");
+          localStorage.setItem("email", emailInput.value);
+          localStorage.setItem("password", passwordInput.value);
+        } else {
+          // Clear credentials from localStorage
+          localStorage.setItem("rememberMe", "false");
+          localStorage.removeItem("email");
+          localStorage.removeItem("password");
+        }
+      });
+    });
+
 });
 
-  // //  Rememberr me functions
-  //   document.addEventListener("DOMContentLoaded", () => {
-  //     // Reference to the checkbox and input fields
-  //     const rememberMeCheckbox = document.getElementById("rememberMe");
-  //     const emailInput = document.getElementById("email");
-  //     const passwordInput = document.getElementById("password");
-    
-  //     // Check if user credentials are saved in localStorage
-  //     if (localStorage.getItem("rememberMe") === "true") {
-  //       emailInput.value = localStorage.getItem("email");
-  //       passwordInput.value = localStorage.getItem("password");
-  //       rememberMeCheckbox.checked = true;
-  //     }
-    
-  //     // Event listener for the checkbox
-  //     rememberMeCheckbox.addEventListener("change", () => {
-  //       if (rememberMeCheckbox.checked) {
-  //         // Save credentials in localStorage
-  //         localStorage.setItem("rememberMe", "true");
-  //         localStorage.setItem("email", emailInput.value);
-  //         localStorage.setItem("password", passwordInput.value);
-  //       } else {
-  //         // Clear credentials from localStorage
-  //         localStorage.setItem("rememberMe", "false");
-  //         localStorage.removeItem("email");
-  //         localStorage.removeItem("password");
-  //       }
-  //     });
-  //   });
-
+ 
 
 // function validateEmail() {
 //     var addressIsLegal = true;
