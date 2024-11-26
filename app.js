@@ -98,7 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
        //  Rememberr me functions
-    document.addEventListener("DOMContentLoaded", () => {
       // Reference to the checkbox and input fields
       const rememberMeCheckbox = document.getElementById("rememberMe");
       const emailInput = document.getElementById("email");
@@ -127,7 +126,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-});
 
  
 
