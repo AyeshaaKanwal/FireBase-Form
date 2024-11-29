@@ -136,3 +136,7 @@ input {
   .register a:hover{
     text-decoration: underline;
   }
+
+  h1{
+    color: rgb(180, 180, 180);
+  }
