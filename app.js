@@ -1,15 +1,36 @@
 import { auth, createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword, sendEmailVerification  } from "./firebase.js";
 
 onAuthStateChanged(auth, (user) => {
-  if (user) {
+   if (user) {
+  //   const displayName = user.displayName || "User";
+  //   const email = user.email || "No email available";
+  //   const photoURL = user.photoURL || "assets/default-img.jpg";
+
+  //   document.getElementById("userBox").textContent = displayName.charAt(0).toUpperCase();
+
+
+  //   document.getElementById("userEmail").textContent = email;
+  //   document.getElementById("userPhoto").src = photoURL;
+
+
     // const uid = user.uid;
     console.log("user", user)
   } else {
+    // document.getElementById("userBox").textContent = "G";
+    // document.getElementById("userEmail").textContent = "Guest";
+    // document.getElementById("userPhoto").src = "assets/default-img.jpg";
+
+
     console.log("user not existed")
     // User is signed out
     // ...
   }
 });
+
+// function toggleDropdown() {
+//   const dropdown = document.getElementById("dropdown");
+//   dropdown.classList.toggle("hidden");
+// }
 
 
 
@@ -31,10 +52,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const user = userCredential.user;
         console.log('user', user);
         alert('SignUp Successful');
+         window.location.href = "home.html"
       })
       .catch((error) => {
         console.log('error', error.message);
       });
+     
   };
 
   let signupbtn = document.getElementById("signupbtn");
@@ -54,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Signed in 
       const user = userCredential.user;
       console.log('user', user)
+       window.location.href = "home.html"
       // ...
     })
     .catch((error) => {
@@ -61,6 +85,9 @@ document.addEventListener("DOMContentLoaded", () => {
       // const errorMessage = error.message;
       console.log('error', error.message)
     });
+
+   
+
   }
   let signinbtn = document.getElementById("signinbtn");
   if (signinbtn) {
@@ -76,7 +103,8 @@ document.addEventListener("DOMContentLoaded", () => {
   signOut(auth).then(() => {
       // Sign-out successful.
       console.log('signout succesful')
-      alert('LogOut')
+      alert('LogOut');
+      window.location.href = "index.html"
     }).catch((error) => {
       // An error happened.
     }); 
