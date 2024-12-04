@@ -1,46 +1,55 @@
-import { auth, createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword, sendEmailVerification  } from "./firebase.js";
-
-onAuthStateChanged(auth, (user) => {
-   if (user) {
-  //   const displayName = user.displayName || "User";
-  //   const email = user.email || "No email available";
-  //   const photoURL = user.photoURL || "assets/default-img.jpg";
-
-  //   document.getElementById("userBox").textContent = displayName.charAt(0).toUpperCase();
-
-
-  //   document.getElementById("userEmail").textContent = email;
-  //   document.getElementById("userPhoto").src = photoURL;
-
-
-    // const uid = user.uid;
-    console.log("user", user)
-  } else {
-    // document.getElementById("userBox").textContent = "G";
-    // document.getElementById("userEmail").textContent = "Guest";
-    // document.getElementById("userPhoto").src = "assets/default-img.jpg";
-
-
-    console.log("user not existed")
-    // User is signed out
-    // ...
-  }
-});
-
-// function toggleDropdown() {
-//   const dropdown = document.getElementById("dropdown");
-//   dropdown.classList.toggle("hidden");
-// }
-
-
+import {
+  auth,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+  signInWithEmailAndPassword,
+  sendEmailVerification,
+} from "./firebase.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Aapka pura code yahan paste karein
   console.log("DOM is fully loaded!");
 
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    const displayName = user.displayName || "User";
+    const email = user.email || "No email available";
+    const photoURL = user.photoURL || "assets/default-img.jpg";
+
+    document.getElementById("userBox").textContent = email
+      .charAt(0)
+      .toUpperCase();
+
+    document.getElementById("userEmail").textContent = email;
+    document.getElementById("userPhoto").src = photoURL;
+
+    const uid = user.uid;
+    console.log("user", user);
+  } else {
+    document.getElementById("userBox").textContent = "G";
+    document.getElementById("userEmail").textContent = "Guest";
+    document.getElementById("userPhoto").src = "assets/default-img.jpg";
+
+    console.log("user not existed");
+    // User is signed out
+    // ...
+  }
+});
+
+const userBox = document.getElementById("userBox");
+const dropdown = document.getElementById("dropdown");
+userBox.addEventListener("click", () => {
+  dropdown.classList.toggle("hidden");
+});
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   // Aapka pura code yahan paste karein
+//   console.log("DOM is fully loaded!");
+
   let signup = () => {
-    let email = document.getElementById('email');
-    let password = document.getElementById('password');
+    let email = document.getElementById("email");
+    let password = document.getElementById("password");
 
     if (!email || !password) {
       console.error("Email or password element not found!");
@@ -50,19 +59,18 @@ document.addEventListener("DOMContentLoaded", () => {
     createUserWithEmailAndPassword(auth, email.value, password.value)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log('user', user);
-        alert('SignUp Successful');
-         window.location.href = "home.html"
+        console.log("user", user);
+        alert("SignUp Successful");
+        window.location.href = "home.html";
       })
       .catch((error) => {
-        console.log('error', error.message);
+        console.log("error", error.message);
       });
-     
   };
 
   let signupbtn = document.getElementById("signupbtn");
   if (signupbtn) {
-    signupbtn.addEventListener('click', signup);
+    signupbtn.addEventListener("click", signup);
   } else {
     console.error("Signup button not found!");
   }
@@ -70,92 +78,83 @@ document.addEventListener("DOMContentLoaded", () => {
   // Baqi code yahan likhein...
 
   let signin = () => {
-    let email = document.getElementById('email');
-    let password = document.getElementById('password');
-  signInWithEmailAndPassword(auth, email.value, password.value)
-    .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      console.log('user', user)
-       window.location.href = "home.html"
-      // ...
-    })
-    .catch((error) => {
-      // const errorCode = error.code;
-      // const errorMessage = error.message;
-      console.log('error', error.message)
-    });
-
-   
-
-  }
+    let email = document.getElementById("email");
+    let password = document.getElementById("password");
+    signInWithEmailAndPassword(auth, email.value, password.value)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log("user", user);
+        window.location.href = "home.html";
+        // ...
+      })
+      .catch((error) => {
+        // const errorCode = error.code;
+        // const errorMessage = error.message;
+        console.log("error", error.message);
+      });
+  };
   let signinbtn = document.getElementById("signinbtn");
   if (signinbtn) {
-    signinbtn.addEventListener('click', signin);
+    signinbtn.addEventListener("click", signin);
   } else {
     console.error("Signin button not found!");
   }
-  
-  
-  
-    // Log Out Functions
-  let signout = () =>{
-  signOut(auth).then(() => {
-      // Sign-out successful.
-      console.log('signout succesful')
-      alert('LogOut');
-      window.location.href = "index.html"
-    }).catch((error) => {
-      // An error happened.
-    }); 
-  }
-    let signoutbtn = document.getElementById("signoutbtn");
-    signoutbtn.addEventListener('click', signout);
-  
-    // email verification functions
-    let verifiedbtn = document.getElementById("verification-email");
-    verifiedbtn.addEventListener('click', () => {
-      sendEmailVerification(auth.currentUser)
-        .then(() => {
-          // Email verification sent!
-          // ...
-          console.log('sent')
-        });
+
+  // Log Out Functions
+  let signout = () => {
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        console.log("signout succesful");
+        alert("LogOut");
+        window.location.href = "index.html";
+      })
+      .catch((error) => {
+        // An error happened.
       });
+  };
+  let signoutbtn = document.getElementById("signoutbtn");
+  signoutbtn.addEventListener("click", signout);
 
-
-
-       //  Rememberr me functions
-      // Reference to the checkbox and input fields
-      const rememberMeCheckbox = document.getElementById("rememberMe");
-      const emailInput = document.getElementById("email");
-      const passwordInput = document.getElementById("password");
-    
-      // Check if user credentials are saved in localStorage
-      if (localStorage.getItem("rememberMe") === "true") {
-        emailInput.value = localStorage.getItem("email");
-        passwordInput.value = localStorage.getItem("password");
-        rememberMeCheckbox.checked = true;
-      }
-    
-      // Event listener for the checkbox
-      rememberMeCheckbox.addEventListener("change", () => {
-        if (rememberMeCheckbox.checked) {
-          // Save credentials in localStorage
-          localStorage.setItem("rememberMe", "true");
-          localStorage.setItem("email", emailInput.value);
-          localStorage.setItem("password", passwordInput.value);
-        } else {
-          // Clear credentials from localStorage
-          localStorage.setItem("rememberMe", "false");
-          localStorage.removeItem("email");
-          localStorage.removeItem("password");
-        }
-      });
+  // email verification functions
+  let verifiedbtn = document.getElementById("verification-email");
+  verifiedbtn.addEventListener("click", () => {
+    sendEmailVerification(auth.currentUser).then(() => {
+      // Email verification sent!
+      // ...
+      console.log("sent");
     });
+  });
 
+  //  Rememberr me functions
+  // Reference to the checkbox and input fields
+  const rememberMeCheckbox = document.getElementById("rememberMe");
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
 
- 
+  // Check if user credentials are saved in localStorage
+  if (localStorage.getItem("rememberMe") === "true") {
+    emailInput.value = localStorage.getItem("email");
+    passwordInput.value = localStorage.getItem("password");
+    rememberMeCheckbox.checked = true;
+  }
+
+  // Event listener for the checkbox
+  rememberMeCheckbox.addEventListener("change", () => {
+    if (rememberMeCheckbox.checked) {
+      // Save credentials in localStorage
+      localStorage.setItem("rememberMe", "true");
+      localStorage.setItem("email", emailInput.value);
+      localStorage.setItem("password", passwordInput.value);
+    } else {
+      // Clear credentials from localStorage
+      localStorage.setItem("rememberMe", "false");
+      localStorage.removeItem("email");
+      localStorage.removeItem("password");
+    }
+  });
+});
 
 // function validateEmail() {
 //     var addressIsLegal = true;
@@ -174,4 +173,3 @@ document.addEventListener("DOMContentLoaded", () => {
 //      return false;
 //      }
 //     }
-    
